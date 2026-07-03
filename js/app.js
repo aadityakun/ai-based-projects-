@@ -177,25 +177,6 @@ function setupNavigation() {
       });
     }
   });
-
-  // Focus Mode buttons
-  document.getElementById('exit-focus-btn')?.addEventListener('click', () => {
-    document.getElementById('focus-mode-overlay').style.display = 'none';
-  });
-
-  document.getElementById('focus-pause-btn')?.addEventListener('click', () => {
-    const status = timerEngine.getStatus();
-    if (status.state === TIMER_STATES.RUNNING) {
-      timerEngine.pause();
-    } else if (status.state === TIMER_STATES.PAUSED) {
-      timerEngine.resume();
-    }
-  });
-
-  document.getElementById('focus-stop-btn')?.addEventListener('click', async () => {
-    await handleStopTimerSession();
-    document.getElementById('focus-mode-overlay').style.display = 'none';
-  });
 }
 
 /**
@@ -276,7 +257,7 @@ function setupModalForms() {
 }
 
 /**
- * Timer Engine State Subscriptions
+ * Timer Engine State Subscriptions & Real-Time Mode Annotation Updates
  */
 function setupTimerSubscriptions() {
   timerEngine.subscribe((status) => {
@@ -290,17 +271,14 @@ function setupTimerSubscriptions() {
       ? formatDigits(status.elapsedSeconds)
       : formatDigits(status.remainingSeconds);
 
-    const focusDigits = document.getElementById('focus-digits');
     const dashDigits = document.getElementById('dash-timer-digits');
-    const focusPauseBtn = document.getElementById('focus-pause-btn');
-
-    if (focusDigits) focusDigits.innerText = digitsText;
+    const dashBadge = document.getElementById('dash-timer-mode-badge');
+    
     if (dashDigits) dashDigits.innerText = digitsText;
-    if (focusPauseBtn) {
-      focusPauseBtn.innerText = status.state === TIMER_STATES.RUNNING ? 'Pause' : 'Resume';
-    }
+    if (dashBadge) dashBadge.innerText = status.mode;
 
     updateDashboardTimerControls(status);
+    updateFocusModeUI(status, digitsText);
 
     if (status.state === TIMER_STATES.RUNNING) {
       document.title = `(${digitsText}) StudyOS`;
@@ -315,7 +293,81 @@ function setupTimerSubscriptions() {
     if (status.state === TIMER_STATES.FINISHED) {
       showToast("Timer completed!", "success");
       handleStopTimerSession();
+      document.getElementById('focus-mode-overlay').style.display = 'none';
     }
+  });
+}
+
+/**
+ * Real-time Focus Mode UI Updates & Control Binding
+ */
+async function updateFocusModeUI(status, digitsText) {
+  const focusDigits = document.getElementById('focus-digits');
+  const focusBadge = document.getElementById('focus-mode-badge');
+  const focusSubtitle = document.getElementById('focus-subject-subtitle');
+  const controlsBox = document.getElementById('focus-controls-container');
+
+  if (focusDigits) focusDigits.innerText = digitsText || (status.mode === TIMER_MODES.STOPWATCH ? '00:00' : '25:00');
+  if (focusBadge) focusBadge.innerText = status.mode || 'POMODORO';
+
+  if (status.subjectId && focusSubtitle) {
+    const subj = await getByKey('subjects', status.subjectId);
+    focusSubtitle.innerText = subj ? `Studying: ${subj.title}` : 'Distraction-free environment';
+  } else if (focusSubtitle) {
+    focusSubtitle.innerText = 'Distraction-free environment';
+  }
+
+  if (!controlsBox) return;
+
+  if (status.state === TIMER_STATES.IDLE) {
+    controlsBox.innerHTML = `
+      <button class="btn-primary" id="focus-start-btn" style="background: white; color: var(--primary-forest);">Start Session</button>
+      <button class="btn-secondary" id="exit-focus-btn" style="color: white; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.15);">Exit Focus</button>
+    `;
+  } else if (status.state === TIMER_STATES.RUNNING) {
+    controlsBox.innerHTML = `
+      <button class="btn-secondary" id="focus-pause-btn" style="background: white; color: var(--primary-forest);">Pause</button>
+      <button class="btn-danger" id="focus-stop-btn">Stop & Save</button>
+      <button class="btn-secondary" id="exit-focus-btn" style="color: white; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.15);">Exit Focus</button>
+    `;
+  } else if (status.state === TIMER_STATES.PAUSED) {
+    controlsBox.innerHTML = `
+      <button class="btn-primary" id="focus-resume-btn" style="background: white; color: var(--primary-forest);">Resume</button>
+      <button class="btn-danger" id="focus-stop-btn">Stop & Save</button>
+      <button class="btn-secondary" id="exit-focus-btn" style="color: white; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.15);">Exit Focus</button>
+    `;
+  }
+
+  // Bind Focus Control Action Events
+  document.getElementById('focus-start-btn')?.addEventListener('click', async () => {
+    const subjSelect = document.getElementById('dash-subject-select');
+    let subjId = subjSelect?.value;
+    if (!subjId) {
+      const subjects = await getAll('subjects');
+      const active = subjects.filter(s => !s.archived);
+      if (active.length > 0) subjId = active[0].id;
+    }
+
+    if (!subjId) {
+      showToast("Please create a study subject first!", "error");
+      return;
+    }
+    const mode = status.mode || TIMER_MODES.POMODORO;
+    const mins = mode === TIMER_MODES.POMODORO ? 25 : mode === TIMER_MODES.COUNTDOWN ? 50 : 0;
+    timerEngine.start(subjId, mode, mins);
+    showToast("Focus session started!", "success");
+  });
+
+  document.getElementById('focus-pause-btn')?.addEventListener('click', () => timerEngine.pause());
+  document.getElementById('focus-resume-btn')?.addEventListener('click', () => timerEngine.resume());
+  
+  document.getElementById('focus-stop-btn')?.addEventListener('click', async () => {
+    await handleStopTimerSession();
+    document.getElementById('focus-mode-overlay').style.display = 'none';
+  });
+
+  document.getElementById('exit-focus-btn')?.addEventListener('click', () => {
+    document.getElementById('focus-mode-overlay').style.display = 'none';
   });
 }
 
@@ -352,15 +404,22 @@ function updateDashboardTimerControls(status) {
       showToast("Please create a study subject first!", "error");
       return;
     }
-    timerEngine.start(subjId, mode, mode === 'POMODORO' ? 25 : 50);
-    showToast("Study session started!", "success");
+    const mins = mode === 'POMODORO' ? 25 : mode === 'COUNTDOWN' ? 50 : 0;
+    timerEngine.start(subjId, mode, mins);
+    showToast(`${mode} study session started!`, "success");
   });
 
   document.getElementById('dash-pause-btn')?.addEventListener('click', () => timerEngine.pause());
   document.getElementById('dash-resume-btn')?.addEventListener('click', () => timerEngine.resume());
   document.getElementById('dash-stop-btn')?.addEventListener('click', () => handleStopTimerSession());
+
   document.getElementById('dash-focus-btn')?.addEventListener('click', () => {
-    document.getElementById('focus-mode-overlay').style.display = 'flex';
+    const overlay = document.getElementById('focus-mode-overlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      const status = timerEngine.getStatus();
+      updateFocusModeUI(status);
+    }
   });
 }
 
@@ -533,7 +592,7 @@ async function renderDashboardPage(container) {
   };
   const timerDigits = timerStatus.state !== TIMER_STATES.IDLE
     ? (timerStatus.mode === TIMER_MODES.STOPWATCH ? formatDigits(timerStatus.elapsedSeconds) : formatDigits(timerStatus.remainingSeconds))
-    : '25:00';
+    : (timerStatus.mode === TIMER_MODES.STOPWATCH ? '00:00' : timerStatus.mode === TIMER_MODES.COUNTDOWN ? '50:00' : '25:00');
 
   // Calculate Normal 7-Day Weekly Strip (Mon - Sun)
   const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -605,7 +664,7 @@ async function renderDashboardPage(container) {
         <div class="timer-hero">
           <div class="dashboard-timer-ring">
             <div class="timer-clock-digits" id="dash-timer-digits">${timerDigits}</div>
-            <div style="font-size:11px; opacity:0.7; font-weight:700; text-transform:uppercase;">${timerStatus.mode || 'POMODORO'}</div>
+            <div id="dash-timer-mode-badge" style="font-size:11px; opacity:0.75; font-weight:800; text-transform:uppercase; margin-top:2px;">${timerStatus.mode || 'POMODORO'}</div>
           </div>
 
           <div style="display:flex; gap:10px; justify-content:center; margin-bottom: 15px;">
@@ -613,9 +672,9 @@ async function renderDashboardPage(container) {
               ${activeSubjects.map(s => `<option value="${s.id}">${s.title}</option>`).join('')}
             </select>
             <select id="dash-mode-select" class="form-input" style="width:auto; min-width:160px;">
-              <option value="POMODORO">Pomodoro (25m)</option>
-              <option value="STOPWATCH">Stopwatch</option>
-              <option value="COUNTDOWN">Countdown (50m)</option>
+              <option value="POMODORO" ${timerStatus.mode === 'POMODORO' ? 'selected' : ''}>Pomodoro (25m)</option>
+              <option value="COUNTDOWN" ${timerStatus.mode === 'COUNTDOWN' ? 'selected' : ''}>Countdown (50m)</option>
+              <option value="STOPWATCH" ${timerStatus.mode === 'STOPWATCH' ? 'selected' : ''}>Stopwatch</option>
             </select>
           </div>
 
@@ -720,6 +779,12 @@ async function renderDashboardPage(container) {
 
   renderAnnualHeatmap(document.getElementById('dash-heatmap-container'), calendarDays);
 
+  // Mode Dropdown Live Selection Change Listener
+  document.getElementById('dash-mode-select')?.addEventListener('change', (e) => {
+    const selectedMode = e.target.value;
+    timerEngine.setMode(selectedMode, selectedMode === 'POMODORO' ? 25 : 50);
+  });
+
   // Bind Quick Add Task
   document.getElementById('dash-quick-task-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -751,8 +816,9 @@ async function renderDashboardPage(container) {
       showToast("Please create a study subject first!", "error");
       return;
     }
-    timerEngine.start(subjId, mode, mode === 'POMODORO' ? 25 : 50);
-    showToast("Study session started!", "success");
+    const mins = mode === 'POMODORO' ? 25 : mode === 'COUNTDOWN' ? 50 : 0;
+    timerEngine.start(subjId, mode, mins);
+    showToast(`${mode} study session started!`, "success");
   });
 
   document.getElementById('dash-pause-btn')?.addEventListener('click', () => timerEngine.pause());
@@ -760,7 +826,12 @@ async function renderDashboardPage(container) {
   document.getElementById('dash-stop-btn')?.addEventListener('click', () => handleStopTimerSession());
 
   document.getElementById('dash-focus-btn')?.addEventListener('click', () => {
-    document.getElementById('focus-mode-overlay').style.display = 'flex';
+    const overlay = document.getElementById('focus-mode-overlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      const status = timerEngine.getStatus();
+      updateFocusModeUI(status);
+    }
   });
 
   document.getElementById('toggle-rest-btn')?.addEventListener('click', async () => {
@@ -1198,7 +1269,7 @@ async function renderAnalyticsPage(container) {
 }
 
 /**
- * 7. Unified Profile & Settings View (§19, §20 Fully Integrated)
+ * 7. Unified Profile & Settings View
  */
 async function renderProfilePage(container) {
   const [sessions, tasks, achievements] = await Promise.all([

@@ -1,6 +1,5 @@
 /* 
- * StudyOS v5 - Enhanced Mobile Spacing & Touch Ergonomics
- * Generous card gaps, bottom nav item breathing room & scroll padding for mobile browsers.
+ * StudyOS v5 - Focus Mode & Ultra-Smooth Animations
  */
 
 :root {
@@ -37,7 +36,7 @@
   /* Layout Dimensions */
   --sidebar-width: 240px;
   --header-height: 60px;
-  --bottom-nav-height: 62px; /* Increased for mobile touch comfort */
+  --bottom-nav-height: 62px;
   --feed-max-width: 960px;
 
   /* Timing */
@@ -112,7 +111,7 @@ body {
   user-select: none;
 }
 
-/* 🚀 Premium Touch Buttons */
+/* Buttons */
 button {
   cursor: pointer;
   font-family: inherit;
@@ -356,7 +355,7 @@ input, select, textarea {
   box-shadow: 0 12px 36px 0 rgba(27, 67, 50, 0.12);
 }
 
-/* 🎨 Hero Banner Card Accent */
+/* Hero Banner Card */
 .hero-banner-card {
   background: linear-gradient(135deg, var(--primary-grass) 0%, var(--primary-forest) 100%);
   color: white;
@@ -454,7 +453,7 @@ input, select, textarea {
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 24px; /* Increased section gap */
+  gap: 24px;
   width: 100%;
 }
 
@@ -464,7 +463,7 @@ input, select, textarea {
 .col-8 { grid-column: span 8; }
 .col-12 { grid-column: span 12; }
 
-/* 📱 HIGH-IMPACT PREMIUM BUTTONS */
+/* Buttons */
 .btn-primary {
   background: linear-gradient(135deg, var(--primary-grass) 0%, var(--primary-forest) 100%);
   color: var(--text-on-primary);
@@ -546,7 +545,7 @@ input, select, textarea {
   box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
 }
 
-/* Priority Tags */
+/* Status Badges & Priority Tags */
 .priority-tag {
   padding: 4px 10px;
   border-radius: 8px;
@@ -559,7 +558,6 @@ input, select, textarea {
 .priority-tag.medium { background: #fefae0; color: #bc6c25; }
 .priority-tag.low { background: #e9f5ed; color: #2d6a4f; }
 
-/* Status Badges */
 .status-badge {
   padding: 4px 12px;
   border-radius: 14px;
@@ -618,7 +616,59 @@ input, select, textarea {
   width: 100%;
 }
 
-/* Mobile Bottom Navigation (Instagram Style with Generous Item Spacing) */
+/* 🎯 FOCUS MODE FULLSCREEN OVERLAY & DYNAMIC CONTROLS */
+.focus-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #2d6a4f 0%, #081c15 100%);
+  color: white;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeInFocus 0.35s var(--ease-spring);
+}
+
+@keyframes fadeInFocus {
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.focus-timer-ring {
+  width: min(290px, 72vw);
+  height: min(290px, 72vw);
+  border-radius: 50%;
+  border: 8px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 24px auto;
+  box-shadow: 0 0 50px rgba(82, 183, 136, 0.35);
+  animation: pulseRing 3s infinite ease-in-out;
+}
+
+@keyframes pulseRing {
+  0%, 100% { transform: scale(1); border-color: rgba(255, 255, 255, 0.25); }
+  50% { transform: scale(1.03); border-color: rgba(216, 243, 220, 0.5); }
+}
+
+.focus-controls-box {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.focus-controls-box button {
+  min-width: 140px;
+}
+
+/* Mobile Bottom Navigation */
 .bottom-nav {
   display: none;
   position: fixed;
@@ -641,8 +691,8 @@ input, select, textarea {
   width: 100%;
   list-style: none;
   margin: 0;
-  padding: 0 12px; /* Added horizontal padding */
-  justify-content: space-around; /* Generous spacing between nav items */
+  padding: 0 12px;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -745,7 +795,7 @@ input, select, textarea {
   }
 }
 
-/* 📱 INSTAGRAM-STYLE DYNAMIC BREAKPOINTS & INCREASED MOBILE SPACING */
+/* 📱 INSTAGRAM-STYLE DYNAMIC BREAKPOINTS & MOBILE FOCUS CONTROLS */
 @media (max-width: 1024px) {
   .col-3, .col-4, .col-6, .col-8, .col-12 {
     grid-column: span 12 !important;
@@ -788,7 +838,6 @@ input, select, textarea {
     display: none;
   }
 
-  /* 📱 Generous Page Padding & Card Spacing on Mobile View */
   .page-container {
     padding: 20px 16px 45px 16px !important;
   }
@@ -800,7 +849,7 @@ input, select, textarea {
 
   .dashboard-grid {
     grid-template-columns: 1fr !important;
-    gap: 22px !important; /* Increased card-to-card gap on mobile */
+    gap: 22px !important;
   }
 
   .hero-banner-card {
@@ -825,14 +874,12 @@ input, select, textarea {
     height: 160px;
   }
 
-  /* Full Width Buttons with Spacing on Mobile */
-  .timer-controls {
+  .timer-controls, .focus-controls-box {
     gap: 12px !important;
+    flex-direction: column !important;
   }
 
-  .timer-controls .btn-primary,
-  .timer-controls .btn-secondary,
-  .timer-controls .btn-danger {
+  .timer-controls button, .focus-controls-box button {
     width: 100% !important;
   }
 

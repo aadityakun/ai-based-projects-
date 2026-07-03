@@ -6,9 +6,9 @@
  */
 
 export const TIMER_MODES = {
-  STOPWATCH: 'STOPWATCH',
   POMODORO: 'POMODORO',
-  COUNTDOWN: 'COUNTDOWN'
+  COUNTDOWN: 'COUNTDOWN',
+  STOPWATCH: 'STOPWATCH'
 };
 
 export const TIMER_STATES = {
@@ -20,10 +20,10 @@ export const TIMER_STATES = {
 
 class TimerEngine {
   constructor() {
-    this.mode = TIMER_MODES.STOPWATCH;
+    this.mode = TIMER_MODES.POMODORO; // Default to Pomodoro 25m
     this.state = TIMER_STATES.IDLE;
     this.subjectId = null;
-    this.targetSeconds = 0; // for Pomodoro / Countdown
+    this.targetSeconds = 25 * 60; // Default 25 minutes
     
     // Monotonic & Wall-clock timestamps
     this.sessionStartMonotonic = 0;
@@ -57,6 +57,18 @@ class TimerEngine {
   notify() {
     const data = this.getStatus();
     this.listeners.forEach(fn => fn(data));
+  }
+
+  setMode(mode, targetMinutes = 25) {
+    this.mode = mode;
+    if (mode === TIMER_MODES.POMODORO) {
+      this.targetSeconds = 25 * 60;
+    } else if (mode === TIMER_MODES.COUNTDOWN) {
+      this.targetSeconds = targetMinutes * 60;
+    } else {
+      this.targetSeconds = 0;
+    }
+    this.notify();
   }
 
   initVisibilityListener() {
@@ -117,6 +129,7 @@ class TimerEngine {
 
   getRemainingSeconds() {
     if (this.mode === TIMER_MODES.STOPWATCH) return 0;
+    if (this.state === TIMER_STATES.IDLE) return this.targetSeconds;
     const elapsed = this.getElapsedSeconds();
     return Math.max(0, this.targetSeconds - elapsed);
   }
@@ -143,10 +156,10 @@ class TimerEngine {
     };
   }
 
-  start(subjectId, mode = TIMER_MODES.STOPWATCH, targetMinutes = 25) {
+  start(subjectId, mode = TIMER_MODES.POMODORO, targetMinutes = 25) {
     this.subjectId = subjectId;
     this.mode = mode;
-    this.targetSeconds = targetMinutes * 60;
+    this.targetSeconds = mode === TIMER_MODES.STOPWATCH ? 0 : targetMinutes * 60;
     this.state = TIMER_STATES.RUNNING;
     this.isClockTampered = false;
 
@@ -177,8 +190,6 @@ class TimerEngine {
     const nowWall = Date.now();
     const pauseDurationSeconds = Math.floor((nowWall - this.pausedAtWallClock) / 1000);
 
-    // §10.5 Session Continuity Rule:
-    // If paused for > 10 minutes (600s), return flag indicating new session split needed
     let requiresNewSession = false;
     if (pauseDurationSeconds > 600) {
       requiresNewSession = true;
@@ -212,15 +223,15 @@ class TimerEngine {
       elapsedSeconds: finalElapsed,
       startTimestamp: startTs,
       endTimestamp: Date.now(),
-      isValid: finalElapsed >= 60 // §10.5 Session Continuity: <60s is ignored
+      isValid: finalElapsed >= 60
     };
   }
 
   reset() {
     this.state = TIMER_STATES.IDLE;
-    this.mode = TIMER_MODES.STOPWATCH;
+    this.mode = TIMER_MODES.POMODORO;
     this.subjectId = null;
-    this.targetSeconds = 0;
+    this.targetSeconds = 25 * 60;
     this.sessionStartMonotonic = 0;
     this.startTimestamp = 0;
     this.pauseMonotonicStart = 0;
@@ -235,7 +246,6 @@ class TimerEngine {
 
   startIntervals() {
     this.stopIntervals();
-    // Smooth ~60 FPS or 500ms ticker for rendering
     this.tickInterval = setInterval(() => {
       if (this.state === TIMER_STATES.RUNNING) {
         if (this.mode !== TIMER_MODES.STOPWATCH && this.getRemainingSeconds() <= 0) {
@@ -247,7 +257,6 @@ class TimerEngine {
       }
     }, 500);
 
-    // §10.1 Auto-save state every 30 seconds
     this.autoSaveInterval = setInterval(() => {
       if (this.state === TIMER_STATES.RUNNING || this.state === TIMER_STATES.PAUSED) {
         this.saveStateToLocalStorage();
