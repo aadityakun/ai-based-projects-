@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Study OS</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="light">
+
+  <!-- ONBOARDING & LOGIN CONTAINER -->
+  <div id="onboarding-container">
+    <div class="onboarding-card">
+      <svg class="brand-logo" viewBox="0 0 24 24" style="width: 60px; height: 60px; margin-bottom: 16px;">
+        <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.38,17.8C9.5,18.8 12,18.8 14.2,17.8L15.8,22L17.7,21.3L15.6,16C17.7,14 18.8,11 17,8M12,16A3,3 0 0,1 9,13C9,11.4 10.3,10 12,10A3,3 0 0,1 15,13C15,14.6 13.7,16 12,16M21,2H17A1,1 0 0,0 16,3V6A1,1 0 0,0 17,7H21A1,1 0 0,0 22,6V3A1,1 0 0,0 21,2M20,5H18V4H20V5Z" />
+      </svg>
+      <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 8px;">Welcome to Personal Study OS</h2>
+      <p style="color: var(--text-muted); margin-bottom: 32px;">Your distraction-free local engine for self-improvement and study productivity.</p>
+
+      <form id="onboarding-form">
+        <div class="form-group">
+          <label class="form-label" for="onboard-username">Username *</label>
+          <input class="form-input" type="text" id="onboard-username" required placeholder="Enter your username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Choose Avatar</label>
+          <div class="avatar-selector">
+            <!-- SVGs for avatar options will be populated dynamically -->
+            <div class="avatar-option selected" data-avatar="sprout">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232e7d32'><path d='M12 2C11.5 2 10 3 10 5.5C10 7.5 11.5 9 12 9.5C12.5 9 14 7.5 14 5.5C14 3 12.5 2 12 2M12 9.5V22H10V14.5C8 14.5 5 13 5 10C5 7.5 7.5 7.5 8 7.5C8.5 7.5 10 8 10 10.5C10 12.5 11.5 14 12 14.5'/></svg>" alt="Sprout">
+            </div>
+            <div class="avatar-option" data-avatar="acorn">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238d6e63'><path d='M12,2A3,3 0 0,1 15,5V6H9V5A3,3 0 0,1 12,2M19,8A7,7 0 0,1 12,15A7,7 0 0,1 5,8V7H19V8M12,16A4,4 0 0,0 16,12V11H8V12A4,4 0 0,0 12,16Z'/></svg>" alt="Acorn">
+            </div>
+            <div class="avatar-option" data-avatar="ladybug">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d32f2f'><path d='M12,2A8,8 0 0,1 20,10C20,14.42 16.42,18 12,18C7.58,18 4,14.42 4,10A8,8 0 0,1 12,2M12,4A6,6 0 0,0 6,10H18A6,6 0 0,0 12,4M12,11A1,1 0 0,1 13,12A1,1 0 0,1 12,13A1,1 0 0,1 11,12A1,1 0 0,1 12,11M16,13A1,1 0 0,1 17,14A1,1 0 0,1 16,15A1,1 0 0,1 15,14A1,1 0 0,1 16,13M8,13A1,1 0 0,1 9,14A1,1 0 0,1 8,15A1,1 0 0,1 7,14A1,1 0 0,1 8,13Z'/></svg>" alt="Ladybug">
+            </div>
+            <div class="avatar-option" data-avatar="leaf">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234caf50'><path d='M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.38,17.8C9.5,18.8 12,18.8 14.2,17.8L15.8,22L17.7,21.3L15.6,16C17.7,14 18.8,11 17,8Z'/></svg>" alt="Leaf">
+            </div>
+            <div class="avatar-option" data-avatar="mushroom">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fb923c'><path d='M12,2A10,10 0 0,0 2,12H6A1,1 0 0,0 7,13V20A2,2 0 0,0 9,22H15A2,2 0 0,0 17,20V13A1,1 0 0,0 18,12H22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 19.9,10H4.1A8,8 0 0,1 12,4Z'/></svg>" alt="Mushroom">
+            </div>
+            <div class="avatar-option" data-avatar="flower">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ba68c8'><path d='M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4M6,12A2,2 0 0,1 8,10A2,2 0 0,1 10,12A2,2 0 0,1 8,14A2,2 0 0,1 6,12M12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20M18,12A2,2 0 0,1 16,14A2,2 0 0,1 14,12A2,2 0 0,1 16,10A2,2 0 0,1 18,12Z'/></svg>" alt="Flower">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="onboard-interests">Interests (comma separated)</label>
+          <input class="form-input" type="text" id="onboard-interests" placeholder="e.g., Programming, Physics, Meditation">
+        </div>
+
+        <div class="grid-cols-2" style="gap: 16px; margin-bottom: 0;">
+          <div class="form-group">
+            <label class="form-label" for="onboard-github">GitHub URL (optional)</label>
+            <input class="form-input" type="url" id="onboard-github" placeholder="https://github.com/username">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="onboard-linkedin">LinkedIn URL (optional)</label>
+            <input class="form-input" type="url" id="onboard-linkedin" placeholder="https://linkedin.com/in/username">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="onboard-instagram">Instagram URL (optional)</label>
+          <input class="form-input" type="url" id="onboard-instagram" placeholder="https://instagram.com/username">
+        </div>
+
+        <div style="text-align: left; margin-bottom: 24px;">
+          <p class="form-label" style="margin-bottom: 12px;">Create Reminders for accounts (optional)</p>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem;">
+              <input type="checkbox" id="reminder-github-contribution" checked> Push a GitHub contribution (Daily)
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem;">
+              <input type="checkbox" id="reminder-linkedin-check" checked> Check LinkedIn opportunities (Weekly)
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem;">
+              <input type="checkbox" id="reminder-instagram-post"> Review Instagram alerts (Weekly)
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">Complete Onboarding</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- APPLICATION SHELL -->
+  <div id="app-container">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar">
+      <div class="brand-section">
+        <svg class="brand-logo" viewBox="0 0 24 24">
+          <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.38,17.8C9.5,18.8 12,18.8 14.2,17.8L15.8,22L17.7,21.3L15.6,16C17.7,14 18.8,11 17,8M12,16A3,3 0 0,1 9,13C9,11.4 10.3,10 12,10A3,3 0 0,1 15,13C15,14.6 13.7,16 12,16M21,2H17A1,1 0 0,0 16,3V6A1,1 0 0,0 17,7H21A1,1 0 0,0 22,6V3A1,1 0 0,0 21,2M20,5H18V4H20V5Z" />
+        </svg>
+        <span class="brand-name">Study OS</span>
+      </div>
+
+      <div class="sidebar-user">
+        <div class="user-avatar-container">
+          <img id="sidebar-avatar" class="user-avatar-img" src="" alt="User Avatar">
+        </div>
+        <div class="sidebar-user-info">
+          <span id="sidebar-username" class="sidebar-user-name">Loading...</span>
+          <span class="sidebar-user-level">
+            <span class="level-badge" id="sidebar-level">1</span> Level
+          </span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav-links">
+        <li class="nav-item active" data-view="dashboard">
+          <button>
+            <svg viewBox="0 0 24 24"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/></svg>
+            Dashboard
+          </button>
+        </li>
+        <li class="nav-item" data-view="timers">
+          <button>
+            <svg viewBox="0 0 24 24"><path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/></svg>
+            Timers
+          </button>
+        </li>
+        <li class="nav-item" data-view="targets">
+          <button>
+            <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/></svg>
+            Targets
+          </button>
+        </li>
+        <li class="nav-item" data-view="growth">
+          <button>
+            <svg viewBox="0 0 24 24"><path d="M20.25 12C20.25 16.56 16.56 20.25 12 20.25C7.44 20.25 3.75 16.56 3.75 12C3.75 7.44 7.44 3.75 12 3.75C16.56 3.75 20.25 7.44 20.25 12M21.75 12C21.75 6.61 17.39 2.25 12 2.25C6.61 2.25 2.25 6.61 2.25 12C2.25 17.39 6.61 21.75 12 21.75C17.39 21.75 21.75 17.39 21.75 12M12 7.5C12.41 7.5 12.75 7.84 12.75 8.25V11.25H15.75C16.16 11.25 16.5 11.59 16.5 12C16.5 12.41 16.16 12.75 15.75 12.75H12.75V15.75C12.75 16.16 12.41 16.5 12 16.5C11.59 16.5 11.25 16.16 11.25 15.75V12.75H8.25C7.84 12.75 7.5 12.41 7.5 12C7.5 11.59 7.84 11.25 8.25 11.25H11.25V8.25C11.25 7.84 11.59 7.5 12 7.5Z"/></svg>
+            Growth
+          </button>
+        </li>
+        <li class="nav-item" data-view="achievements">
+          <button>
+            <svg viewBox="0 0 24 24"><path d="M18 2H6C4.9 2 4 2.9 4 4V7C4 9.8 6 12.2 8.8 12.8C9.5 14.1 10.7 14.9 12 15V18H9C8.4 18 8 18.4 8 19V20C8 20.6 8.4 21 9 21H15C15.6 21 16 20.6 16 20V19C16 18.4 15.6 18 15 18H12V15C13.3 14.9 14.5 14.1 15.2 12.8C18 12.2 20 9.8 20 7V4C20 2.9 19.1 2 18 2M6 7V4H8V9C6.8 8.5 6 7.8 6 7M18 7C18 7.8 17.2 8.5 16 9V4H18V7Z"/></svg>
+            Achievements
+          </button>
+        </li>
+        <li class="nav-item" data-view="analytics">
+          <button>
+            <svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.97,5.45L16.74,14.5L10.23,10.75L5.46,19L3.73,18L9.74,7.5L16,11.78Z"/></svg>
+            Analytics
+          </button>
+        </li>
+        <li class="nav-item" data-view="settings">
+          <button>
+            <svg viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.34 14.86,5.08L14.48,2.42C14.44,2.18 14.24,2 14,2H10C9.76,2 9.56,2.18 9.52,2.42L9.14,5.08C8.53,5.34 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.95C7.96,18.34 8.53,18.66 9.14,18.92L9.14,21.58C9.56,21.82 9.76,22 10,22H14C14.24,22 14.44,21.82 14.48,21.58L14.86,18.92C15.47,18.66 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/></svg>
+            Profile & Settings
+          </button>
+        </li>
+      </nav>
+
+      <div class="theme-toggle-container">
+        <button id="theme-toggle-btn" class="theme-toggle-btn">
+          <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;"><path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/></svg>
+          <span>Dark Mode</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN VIEWS -->
+    <main id="main-content">
+
+      <!-- VIEW: DASHBOARD -->
+      <section id="view-dashboard" class="view-section active">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1 id="dashboard-welcome">Hello, User!</h1>
+            <p>Welcome back to your Study Dashboard.</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div id="streak-badge-container" class="btn btn-secondary" style="border-radius: 30px; font-weight: bold; cursor: default; display: none;">
+              🔥 <span id="dashboard-streak">0</span> Day Streak
+            </div>
+            <button class="btn btn-primary" id="dashboard-start-timer-btn">Start Study Timer</button>
+          </div>
+        </div>
+
+        <!-- GAMIFICATION SUMMARY BAR -->
+        <div class="card" style="margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 700; display: flex; align-items: center; gap: 8px;">
+              ⭐ Level <span id="dash-level-val">1</span> Progress
+            </span>
+            <span id="dash-xp-text" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">0 / 100 XP</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="dash-xp-progress"></div>
+          </div>
+        </div>
+
+        <!-- STATS ROW -->
+        <div class="grid-cols-4">
+          <div class="card stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24"><path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Hours Today</span>
+              <span class="stat-value" id="stat-hours-today">0.0h</span>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24"><path d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Hours This Week</span>
+              <span class="stat-value" id="stat-hours-week">0.0h</span>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24"><path d="M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M11,10H13V12H11V10M7,10H9V12H7V10M15,10H17V12H15V10M11,14H13V16H11V14M7,14H9V16H7V14M15,14H17V16H15V14Z"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Hours This Month</span>
+              <span class="stat-value" id="stat-hours-month">0.0h</span>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24"><path d="M12,2C6.47,2 2,6.47 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M13,7H11V13H17V11H13V7Z"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Lifetime Hours</span>
+              <span class="stat-value" id="stat-hours-lifetime">0.0h</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-cols-2">
+          <!-- MAIN STUDY TRACKER SECTION (SUBJECTS) -->
+          <div class="card" style="display: flex; flex-direction: column;">
+            <div class="subjects-section-header">
+              <h2 style="font-size: 1.35rem; font-weight: 800;">Study Subjects</h2>
+              <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;" id="subjects-count-label">0 / 10 subjects</span>
+            </div>
+            
+            <div class="subject-grid" id="subjects-grid">
+              <!-- Dynamically populated subject cards -->
+            </div>
+            
+            <button class="btn btn-secondary" id="add-subject-btn" style="margin-top: auto;">
+              ➕ Create New Subject
+            </button>
+          </div>
+
+          <!-- TARGETS PREVIEW -->
+          <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h2 style="font-size: 1.35rem; font-weight: 800;">Today's Target Progress</h2>
+              <span class="tag" id="target-progress-percentage">0% Complete</span>
+            </div>
+            
+            <div class="progress-bar-container" style="margin-bottom: 24px;">
+              <div class="progress-bar-fill" id="target-progress-bar" style="width: 0%;"></div>
+            </div>
+
+            <div class="task-list" id="dashboard-tasks-preview">
+              <!-- Dynamic list of today's targets -->
+            </div>
+            <button class="btn btn-secondary" style="width: 100%; margin-top: 16px;" id="dashboard-manage-targets-btn">
+              Manage Targets & Tasks
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: TIMERS -->
+      <section id="view-timers" class="view-section">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1>Study Timers</h1>
+            <p>Select a timer, pick a subject, and enter Focus Mode.</p>
+          </div>
+        </div>
+
+        <div class="timer-container">
+          <!-- LEFT TIMER BLOCK -->
+          <div class="card timer-card">
+            <div class="timer-tabs">
+              <button class="timer-tab-btn active" data-type="stopwatch">Stopwatch</button>
+              <button class="timer-tab-btn" data-type="pomodoro">Pomodoro</button>
+              <button class="timer-tab-btn" data-type="countdown">Countdown</button>
+            </div>
+
+            <!-- SVG PROGRESS CIRCLE -->
+            <div class="progress-ring-container">
+              <svg width="280" height="280" style="overflow: visible;">
+                <circle class="timer-ring-bg" cx="140" cy="140" r="125" fill="none" stroke="rgba(var(--primary-rgb), 0.08)" stroke-width="12" />
+                <circle id="timer-ring-fill" class="timer-ring-circle" cx="140" cy="140" r="125" fill="none" stroke="var(--primary)" stroke-width="12" stroke-dasharray="785" stroke-dashoffset="0" stroke-linecap="round" />
+              </svg>
+              <div class="timer-display-text">
+                <span class="timer-digits" id="timer-display-digits">00:00:00</span>
+                <span class="timer-subject-label" id="timer-display-subject">No Subject</span>
+              </div>
+            </div>
+
+            <!-- CONTROLS -->
+            <div class="timer-controls">
+              <button class="btn btn-secondary" id="timer-reset-btn" style="border-radius: 50%; width: 50px; height: 50px; padding: 0;">
+                <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: currentColor;"><path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"/></svg>
+              </button>
+              <button class="btn btn-primary" id="timer-start-btn" style="border-radius: 50%; width: 70px; height: 70px; padding: 0;">
+                <svg id="timer-play-icon" viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: white;"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>
+                <svg id="timer-pause-icon" viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: white; display: none;"><path d="M14,19H18V5H14M6,19H10V5H6V19Z"/></svg>
+              </button>
+              <button class="btn btn-danger" id="timer-stop-btn" style="border-radius: 50%; width: 50px; height: 50px; padding: 0;">
+                <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: currentColor;"><path d="M18,18H6V6H18V18Z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT TIMERS CONFIG OPTIONS -->
+          <div class="card" style="display: flex; flex-direction: column; justify-content: flex-start; gap: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 800;">Timer Configuration</h2>
+
+            <div class="form-group">
+              <label class="form-label" for="timer-subject-select">Study Subject</label>
+              <select class="form-input" id="timer-subject-select">
+                <!-- Dynamically filled with user subjects -->
+              </select>
+            </div>
+
+            <!-- OPTIONS FOR POMODORO -->
+            <div id="timer-options-pomodoro" class="timer-options" style="display: none;">
+              <span class="form-label">Pomodoro Presets</span>
+              <div class="presets-grid">
+                <button class="btn btn-secondary active" data-preset="25-5">25 / 5 Min</button>
+                <button class="btn btn-secondary" data-preset="50-10">50 / 10 Min</button>
+                <button class="btn btn-secondary" data-preset="custom">Custom</button>
+              </div>
+              <div id="pomodoro-custom-config" style="display: none; margin-top: 16px;" class="grid-cols-2">
+                <div>
+                  <label class="form-label" for="pomo-custom-work">Work (Min)</label>
+                  <input type="number" class="form-input" id="pomo-custom-work" min="1" value="25">
+                </div>
+                <div>
+                  <label class="form-label" for="pomo-custom-break">Break (Min)</label>
+                  <input type="number" class="form-input" id="pomo-custom-break" min="1" value="5">
+                </div>
+              </div>
+            </div>
+
+            <!-- OPTIONS FOR COUNTDOWN -->
+            <div id="timer-options-countdown" class="timer-options" style="display: none;">
+              <label class="form-label" for="countdown-duration">Countdown Duration (Minutes)</label>
+              <input type="number" class="form-input" id="countdown-duration" min="1" value="45">
+            </div>
+
+            <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(var(--primary-rgb), 0.1);">
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                💡 Sessions are saved automatically. Enter focus mode by clicking Start.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: TARGETS -->
+      <section id="view-targets" class="view-section">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1>Daily Target System</h1>
+            <p>Create and track your targets for today and this week.</p>
+          </div>
+          <button class="btn btn-primary" id="add-task-btn">➕ Add New Target</button>
+        </div>
+
+        <div class="tasks-container">
+          <!-- DAILY TARGETS -->
+          <div class="card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between;">
+              <span>Daily Targets</span>
+              <span id="daily-remaining-label" style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">0 remaining</span>
+            </h2>
+            <div class="task-list" id="daily-tasks-list">
+              <!-- Dynamically populated daily targets -->
+            </div>
+          </div>
+
+          <!-- WEEKLY TARGETS -->
+          <div class="card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between;">
+              <span>Weekly Targets</span>
+              <span id="weekly-remaining-label" style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">0 remaining</span>
+            </h2>
+            <div class="task-list" id="weekly-tasks-list">
+              <!-- Dynamically populated weekly targets -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: GROWTH -->
+      <section id="view-growth" class="view-section">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1>Personal Growth Tasks</h1>
+            <p>Schedule recurring physical and mental habits to expand your skillsets.</p>
+          </div>
+          <button class="btn btn-primary" id="add-growth-btn">➕ Add Growth Task</button>
+        </div>
+
+        <div class="grid-cols-2">
+          <!-- PHYSICAL HABITS -->
+          <div class="card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              🏃‍♂️ Physical Habits
+            </h2>
+            <div class="task-list" id="growth-physical-list">
+              <!-- Dynamic physical habits -->
+            </div>
+          </div>
+
+          <!-- MENTAL HABITS -->
+          <div class="card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              🧠 Mental Habits
+            </h2>
+            <div class="task-list" id="growth-mental-list">
+              <!-- Dynamic mental habits -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: ACHIEVEMENTS -->
+      <section id="view-achievements" class="view-section">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1>Performance & Gamification</h1>
+            <p>Your gamified study stats, streaks, level progression, and achievements.</p>
+          </div>
+        </div>
+
+        <div class="grid-cols-4">
+          <div class="card stat-card">
+            <div class="stat-icon">🌟</div>
+            <div class="stat-info">
+              <span class="stat-label">Current Level</span>
+              <span class="stat-value" id="gamify-level">1</span>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">✨</div>
+            <div class="stat-info">
+              <span class="stat-label">Total XP Earned</span>
+              <span class="stat-value" id="gamify-xp">0</span>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-info">
+              <span class="stat-label">Current Streak</span>
+              <span class="stat-value" id="gamify-streak">0 days</span>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-info">
+              <span class="stat-label">Achievements</span>
+              <span class="stat-value" id="gamify-badges">0 / 8</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAILY PERFORMANCE CALENDAR & MONTHLY STATISTICS -->
+        <div class="grid-cols-2" style="grid-template-columns: 1.3fr 0.7fr;">
+          <!-- CALENDAR -->
+          <div class="card calendar-card">
+            <div class="calendar-header">
+              <h2 style="font-size: 1.25rem; font-weight: 800;" id="calendar-month-year">Performance Calendar</h2>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary" id="calendar-prev-month" style="padding: 6px 12px;">◀</button>
+                <button class="btn btn-secondary" id="calendar-next-month" style="padding: 6px 12px;">▶</button>
+              </div>
+            </div>
+
+            <div class="calendar-grid" id="calendar-grid-days">
+              <!-- Populated dynamically -->
+            </div>
+
+            <div class="calendar-legend">
+              <div class="legend-item"><div class="legend-color" style="background-color: var(--day-green);"></div> Green (100% Tasks)</div>
+              <div class="legend-item"><div class="legend-color" style="background-color: var(--day-yellow);"></div> Yellow (80-99% Tasks)</div>
+              <div class="legend-item"><div class="legend-color" style="background-color: var(--day-orange);"></div> Orange (50-79% Tasks)</div>
+              <div class="legend-item"><div class="legend-color" style="background-color: var(--day-red);"></div> Red (&lt;50% or Missed)</div>
+            </div>
+          </div>
+
+          <!-- MONTHLY STATS -->
+          <div class="card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;">Monthly Statistics</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(var(--primary-rgb), 0.05); padding-bottom: 8px;">
+                <span style="color: var(--text-muted); font-weight: 500;">🟢 Green Days</span>
+                <span id="calendar-stat-green" style="font-weight: 700;">0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(var(--primary-rgb), 0.05); padding-bottom: 8px;">
+                <span style="color: var(--text-muted); font-weight: 500;">🟡 Yellow Days</span>
+                <span id="calendar-stat-yellow" style="font-weight: 700;">0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(var(--primary-rgb), 0.05); padding-bottom: 8px;">
+                <span style="color: var(--text-muted); font-weight: 500;">🟠 Orange Days</span>
+                <span id="calendar-stat-orange" style="font-weight: 700;">0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(var(--primary-rgb), 0.05); padding-bottom: 8px;">
+                <span style="color: var(--text-muted); font-weight: 500;">🔴 Red Days</span>
+                <span id="calendar-stat-red" style="font-weight: 700;">0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(var(--primary-rgb), 0.05); padding-bottom: 8px;">
+                <span style="color: var(--text-muted); font-weight: 500;">🔥 Longest Streak</span>
+                <span id="calendar-stat-longest-streak" style="font-weight: 700;">0 days</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted); font-weight: 500;">📈 Completion Rate</span>
+                <span id="calendar-stat-completion-rate" style="font-weight: 700;">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIST OF UNLOCKED ACHIEVEMENTS -->
+        <div class="card" style="margin-top: 32px;">
+          <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;">Unlocked Achievements</h2>
+          <div class="achievements-grid" id="achievements-grid-list">
+            <!-- Dynamic achievements grid -->
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: ANALYTICS -->
+      <section id="view-analytics" class="view-section">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1>Analytics and Graphs</h1>
+            <p>Analyze your study habits, subject distribution, and productivity logs.</p>
+          </div>
+        </div>
+
+        <div class="grid-cols-2">
+          <!-- STUDY TIMING CHART -->
+          <div class="card chart-container-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h2 style="font-size: 1.25rem; font-weight: 800;">Study Hours Log</h2>
+              <select class="form-input" id="chart-timeframe-select" style="width: auto; padding: 6px 12px;">
+                <option value="daily">Daily Study Hours</option>
+                <option value="weekly">Weekly Study Hours</option>
+                <option value="monthly">Monthly Study Hours</option>
+              </select>
+            </div>
+            <div id="study-hours-chart-container">
+              <!-- SVG chart loaded here -->
+              <svg class="svg-chart" id="study-hours-chart" viewBox="0 0 600 280"></svg>
+            </div>
+          </div>
+
+          <!-- SUBJECT ANALYSIS -->
+          <div class="card chart-container-card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px;">Subject Study Share</h2>
+            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; align-items: center;">
+              <div id="subject-pie-chart-container">
+                <svg class="svg-chart" id="subject-pie-chart" viewBox="0 0 300 280" style="height: 250px;"></svg>
+              </div>
+              <div>
+                <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">Subject Ranking</h3>
+                <ol id="subject-ranking-list" style="padding-left: 20px; font-size: 0.9rem; display: flex; flex-direction: column; gap: 8px;">
+                  <!-- Dynamically populated ranks -->
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-cols-2">
+          <!-- PRODUCTIVITY ANALYTICS (XP AND COMPLETED TASKS) -->
+          <div class="card chart-container-card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px;">XP Accumulation over Time</h2>
+            <svg class="svg-chart" id="xp-progress-chart" viewBox="0 0 600 280"></svg>
+          </div>
+
+          <div class="card chart-container-card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px;">Task Completion Trends</h2>
+            <svg class="svg-chart" id="task-completion-chart" viewBox="0 0 600 280"></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: SETTINGS -->
+      <section id="view-settings" class="view-section">
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1>Profile & OS Settings</h1>
+            <p>Manage your identity, reminders, active settings, and local database storage.</p>
+          </div>
+        </div>
+
+        <!-- PROFILE DETAIL CARD -->
+        <div class="grid-cols-2">
+          <div class="card" style="display: flex; flex-direction: column; gap: 20px;">
+            <h2 style="font-size: 1.25rem; font-weight: 800; border-bottom: 1px solid rgba(var(--primary-rgb), 0.1); padding-bottom: 12px;">User Profile</h2>
+            
+            <div style="display: flex; gap: 24px; align-items: center;">
+              <img id="profile-img" src="" alt="Profile image" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover;">
+              <div>
+                <h3 id="profile-username" style="font-size: 1.5rem; font-weight: 800;">Username</h3>
+                <p id="profile-join-date" style="font-size: 0.85rem; color: var(--text-muted);">Joined Date</p>
+                <div style="display: flex; gap: 8px; margin-top: 8px;" id="profile-interests-tags">
+                  <!-- Tag items loaded here -->
+                </div>
+              </div>
+            </div>
+
+            <!-- CONNECTED SOCIAL ACCOUNTS -->
+            <div style="margin-top: 12px;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">Connected Accounts</h4>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div id="profile-github-link" style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                  <!-- GitHub link populated -->
+                </div>
+                <div id="profile-linkedin-link" style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                  <!-- LinkedIn link populated -->
+                </div>
+                <div id="profile-instagram-link" style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                  <!-- Instagram link populated -->
+                </div>
+              </div>
+            </div>
+
+            <!-- REMINDER LOGS -->
+            <div>
+              <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 4px;">Reminder Completions History</h4>
+              <div class="reminder-history-list" id="profile-reminders-list">
+                <!-- Dynamically loaded list of logs -->
+              </div>
+            </div>
+          </div>
+
+          <!-- DATA MANAGEMENT -->
+          <div class="card" style="display: flex; flex-direction: column; gap: 20px;">
+            <h2 style="font-size: 1.25rem; font-weight: 800; border-bottom: 1px solid rgba(var(--primary-rgb), 0.1); padding-bottom: 12px;">Local Data Management</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <button class="btn btn-secondary" id="data-export-pdf-btn" style="justify-content: flex-start;">
+                📄 Export Report as PDF (Print)
+              </button>
+              <button class="btn btn-secondary" id="data-export-csv-btn" style="justify-content: flex-start;">
+                📊 Export Time Logs & Tasks as CSV
+              </button>
+              <button class="btn btn-secondary" id="data-backup-btn" style="justify-content: flex-start;">
+                💾 Backup OS Data (JSON)
+              </button>
+              <label class="btn btn-secondary" style="justify-content: flex-start; cursor: pointer; display: inline-flex; width: 100%;">
+                📥 Restore OS Data (JSON)
+                <input type="file" id="data-restore-input" style="display: none;" accept=".json">
+              </label>
+              <button class="btn btn-danger" id="data-reset-btn" style="justify-content: flex-start; margin-top: 16px;">
+                ⚠️ Wipe Database & Restart OS
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- APP CONFIGURATIONS -->
+        <div class="grid-cols-2">
+          <!-- GENERAL PREFERENCES -->
+          <div class="card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid rgba(var(--primary-rgb), 0.1); padding-bottom: 12px;">Preferences</h2>
+            
+            <form id="preferences-form">
+              <div class="form-group">
+                <label class="form-label" for="pref-pomo-duration">Default Pomodoro Focus (Min)</label>
+                <input type="number" class="form-input" id="pref-pomo-duration" min="5" max="180" value="25">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pref-break-duration">Default Pomodoro Break (Min)</label>
+                <input type="number" class="form-input" id="pref-break-duration" min="1" max="60" value="5">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+                <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem;">
+                  <input type="checkbox" id="pref-sound-enabled" checked> Enable timer sound chimes
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem;">
+                  <input type="checkbox" id="pref-auto-break" checked> Start break periods automatically
+                </label>
+                <label id="pref-dnd-container" style="display: none; align-items: center; justify-content: space-between; gap: 10px; font-size: 0.9rem; margin-top: 4px; padding: 8px; border-radius: var(--radius-sm); background: rgba(var(--primary-rgb), 0.04);">
+                  <span style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="pref-dnd-enabled"> Enable DND in Focus Mode
+                  </span>
+                  <button type="button" id="pref-dnd-permission-btn" class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;">Grant Permission</button>
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Preferences</button>
+            </form>
+          </div>
+
+          <!-- REMINDER CONFIGS -->
+          <div class="card">
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid rgba(var(--primary-rgb), 0.1); padding-bottom: 12px;">Reminders Config</h2>
+            
+            <div id="reminders-settings-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+              <!-- Reminders checklist with actions -->
+            </div>
+            
+            <button class="btn btn-secondary" style="width: 100%;" id="settings-add-reminder-btn">
+              ➕ Create Custom Account Reminder
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- FOCUS OVERLAY -->
+  <div id="focus-overlay">
+    <div class="focus-container">
+      <div class="focus-subject-name" id="focus-subject-title">Subject Title</div>
+      <div class="focus-timer-ring">
+        <svg width="320" height="320" style="overflow: visible;">
+          <circle class="timer-ring-bg focus-ring-bg" cx="160" cy="160" r="145" fill="none" stroke-width="8" />
+          <circle id="focus-ring-fill" class="timer-ring-circle focus-ring-fill" cx="160" cy="160" r="145" fill="none" stroke-width="8" stroke-dasharray="911" stroke-dashoffset="0" stroke-linecap="round" />
+        </svg>
+        <div class="timer-display-text">
+          <span class="timer-digits focus-digits" id="focus-digits-display">00:00:00</span>
+          <span class="timer-subject-label" id="focus-timer-type-label">Stopwatch</span>
+        </div>
+      </div>
+
+      <div class="focus-controls">
+        <button class="focus-btn" id="focus-pause-btn" title="Pause Timer">
+          <svg viewBox="0 0 24 24"><path d="M14,19H18V5H14M6,19H10V5H6V19Z"/></svg>
+        </button>
+        <button class="focus-btn" id="focus-resume-btn" title="Resume Timer" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>
+        </button>
+        <button class="focus-btn" id="focus-stop-btn" title="Stop and Log Session" style="border-color: #ef4444; color: #ef4444; background: rgba(239, 68, 68, 0.05);">
+          <svg viewBox="0 0 24 24"><path d="M18,18H6V6H18V18Z"/></svg>
+        </button>
+      </div>
+
+      <div class="focus-progress-indicator">
+        <div class="focus-pulse-dot"></div>
+        <span id="focus-progress-label">Focus Mode Active</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD SUBJECT -->
+  <div id="modal-subject" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="subject-modal-title">Create New Subject</h3>
+        <button class="modal-close" onclick="closeModal('modal-subject')">
+          <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+        </button>
+      </div>
+      <form id="modal-subject-form">
+        <input type="hidden" id="modal-subject-id">
+        <div class="form-group">
+          <label class="form-label" for="subject-name">Subject Name *</label>
+          <input type="text" class="form-input" id="subject-name" required placeholder="e.g., Mathematics">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="subject-color">Subject Color Accent</label>
+          <select class="form-input" id="subject-color">
+            <option value="#34a853">Forest Green</option>
+            <option value="#22c55e">Emerald Green</option>
+            <option value="#3f51b5">Indigo Blue</option>
+            <option value="#0ea5e9">Sky Blue</option>
+            <option value="#f59e0b">Amber Gold</option>
+            <option value="#ea580c">Terracotta Orange</option>
+            <option value="#a855f7">Sage Purple</option>
+            <option value="#ec4899">Rose Pink</option>
+            <option value="#8d6e63">Acorn Brown</option>
+            <option value="#64748b">Slate Gray</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-subject')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="subject-submit-btn">Create Subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD TARGET/TASK -->
+  <div id="modal-task" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="task-modal-title">Create Daily Target</h3>
+        <button class="modal-close" onclick="closeModal('modal-task')">
+          <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+        </button>
+      </div>
+      <form id="modal-task-form">
+        <input type="hidden" id="modal-task-id">
+        <div class="form-group">
+          <label class="form-label" for="task-title">Title *</label>
+          <input type="text" class="form-input" id="task-title" required placeholder="e.g., Solve 5 integration limits">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="task-desc">Description</label>
+          <textarea class="form-input" id="task-desc" style="height: 70px; resize: none;" placeholder="Provide brief steps/notes"></textarea>
+        </div>
+        <div class="grid-cols-2" style="gap: 16px; margin-bottom: 0;">
+          <div class="form-group">
+            <label class="form-label" for="task-category">Category</label>
+            <select class="form-input" id="task-category">
+              <option value="Study">Study</option>
+              <option value="Physical">Physical</option>
+              <option value="Mental">Mental</option>
+              <option value="Personal">Personal</option>
+              <option value="Social Media Update">Social Media Update</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="task-duration">Est. Duration (Min)</label>
+            <input type="number" class="form-input" id="task-duration" min="5" value="30">
+          </div>
+        </div>
+        <div class="grid-cols-2" style="gap: 16px; margin-bottom: 0;">
+          <div class="form-group">
+            <label class="form-label" for="task-due">Due Date</label>
+            <input type="date" class="form-input" id="task-due">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="task-type">Scope</label>
+            <select class="form-input" id="task-type">
+              <option value="daily">Daily Target</option>
+              <option value="weekly">Weekly Target</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-task')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="task-submit-btn">Add Target</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD GROWTH HABIT -->
+  <div id="modal-growth" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="growth-modal-title">Create Growth Task</h3>
+        <button class="modal-close" onclick="closeModal('modal-growth')">
+          <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+        </button>
+      </div>
+      <form id="modal-growth-form">
+        <input type="hidden" id="modal-growth-id">
+        <div class="form-group">
+          <label class="form-label" for="growth-title">Habit Name *</label>
+          <input type="text" class="form-input" id="growth-title" required placeholder="e.g., Read 15 pages of a book">
+        </div>
+        <div class="grid-cols-2" style="gap: 16px; margin-bottom: 0;">
+          <div class="form-group">
+            <label class="form-label" for="growth-category">Category</label>
+            <select class="form-input" id="growth-category">
+              <option value="Mental">Mental</option>
+              <option value="Physical">Physical</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="growth-duration">Est. Duration (Min)</label>
+            <input type="number" class="form-input" id="growth-duration" min="5" value="15">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="growth-recurrence">Recurrence Options</label>
+          <select class="form-input" id="growth-recurrence">
+            <option value="daily">Daily</option>
+            <option value="weekdays">Weekdays Only</option>
+            <option value="weekly">Weekly</option>
+            <option value="specific">Specific Days</option>
+          </select>
+        </div>
+        
+        <!-- SPECIFIC DAYS CHECKBOXES -->
+        <div id="growth-specific-days-panel" style="display: none; margin-bottom: 20px;">
+          <label class="form-label">Select Days</label>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <label style="font-size: 0.85rem;"><input type="checkbox" name="growth-days" value="1"> Mon</label>
+            <label style="font-size: 0.85rem;"><input type="checkbox" name="growth-days" value="2"> Tue</label>
+            <label style="font-size: 0.85rem;"><input type="checkbox" name="growth-days" value="3"> Wed</label>
+            <label style="font-size: 0.85rem;"><input type="checkbox" name="growth-days" value="4"> Thu</label>
+            <label style="font-size: 0.85rem;"><input type="checkbox" name="growth-days" value="5"> Fri</label>
+            <label style="font-size: 0.85rem;"><input type="checkbox" name="growth-days" value="6"> Sat</label>
+            <label style="font-size: 0.85rem;"><input type="checkbox" name="growth-days" value="0"> Sun</label>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-growth')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="growth-submit-btn">Create Habit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD REMINDER -->
+  <div id="modal-reminder" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Custom Reminder</h3>
+        <button class="modal-close" onclick="closeModal('modal-reminder')">
+          <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+        </button>
+      </div>
+      <form id="modal-reminder-form">
+        <div class="form-group">
+          <label class="form-label" for="reminder-label">Reminder Text *</label>
+          <input type="text" class="form-input" id="reminder-label" required placeholder="e.g., Review LinkedIn Messages">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reminder-url">Associated Web Link (optional)</label>
+          <input type="url" class="form-input" id="reminder-url" placeholder="https://linkedin.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reminder-frequency">Frequency</label>
+          <select class="form-input" id="reminder-frequency">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="custom">Custom (Every 3 days)</option>
+          </select>
+        </div>
+        <div id="reminder-custom-days-container" class="form-group" style="display: none;">
+          <label class="form-label" for="reminder-custom-days">Days interval</label>
+          <input type="number" class="form-input" id="reminder-custom-days" min="2" value="3">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-reminder')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Reminder</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CALENDAR DAY DETAIL POPUP -->
+  <div id="modal-calendar-detail" class="modal-overlay">
+    <div class="modal-card" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="cal-detail-date">June 29, 2026</h3>
+        <button class="modal-close" onclick="closeModal('modal-calendar-detail')">
+          <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+        </button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <span class="tag" id="cal-detail-rating" style="font-size: 0.9rem;">Rating: Unknown</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+            <span>Completed Tasks:</span>
+            <span id="cal-detail-tasks-completed" style="font-weight: bold;">0 / 0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+            <span>Missed Tasks:</span>
+            <span id="cal-detail-tasks-missed" style="font-weight: bold; color: var(--day-red);">0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+            <span>Study Time:</span>
+            <span id="cal-detail-study-time" style="font-weight: bold;">0m</span>
+          </div>
+        </div>
+        
+        <div id="cal-detail-recovery-message" style="display: none; padding: 12px; border-radius: var(--radius-md); background: rgba(211, 47, 47, 0.05); color: var(--day-red); font-size: 0.85rem; font-style: italic; border-left: 4px solid var(--day-red);">
+          "Tomorrow is a new sunrise. Seeds grow in quiet rain; forgive yourself and start small."
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="closeModal('modal-calendar-detail')" style="width: 100%;">Close Details</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global modal closer helper
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+  </script>
+  
+  <script src="js/app.js"></script>
+
+</body>
+</html>
