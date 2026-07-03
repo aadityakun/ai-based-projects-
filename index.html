@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>StudyOS — Personal Productivity & Study Operating System</title>
+  <meta name="description" content="Single-user, offline-first Progressive Web App for studying, habits, tasks, and productivity. Privacy-focused.">
+  
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1b4332">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- App Shell -->
+  <div id="app">
+
+    <!-- Desktop Sidebar Navigation -->
+    <nav class="sidebar" id="main-sidebar">
+      <div class="sidebar-header">
+        <img src="icons/icon-192.png" alt="StudyOS Logo" class="app-logo-icon" id="sidebar-logo">
+        <span class="brand-title">StudyOS</span>
+      </div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span> Dashboard</a></li>
+        <li><a href="#" class="nav-item" data-page="study"><span class="nav-icon">📚</span> Study Module</a></li>
+        <li><a href="#" class="nav-item" data-page="tasks"><span class="nav-icon">✅</span> Tasks</a></li>
+        <li><a href="#" class="nav-item" data-page="growth"><span class="nav-icon">🌱</span> Personal Growth</a></li>
+        <li><a href="#" class="nav-item" data-page="reminders"><span class="nav-icon">🔔</span> Reminders</a></li>
+        <li><a href="#" class="nav-item" data-page="analytics"><span class="nav-icon">📈</span> Analytics</a></li>
+        <li><a href="#" class="nav-item" data-page="profile"><span class="nav-icon">⚙️</span> Profile & Settings</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-search" id="trigger-search-btn" title="Search (Ctrl+K)">
+          <span style="font-size: 14px;">🔍</span>
+          <span class="search-input-placeholder">Search subjects, tasks...</span>
+          <span class="shortcut-badge">Ctrl+K</span>
+        </div>
+
+        <div class="header-actions">
+          <div class="badge-item" id="header-streak-badge" title="Active Streak">
+            <span>🔥</span> <span id="header-streak-count">0</span>d
+          </div>
+          <div class="badge-item" id="header-level-badge" title="Level & XP">
+            <span>⭐</span> Lvl <span id="header-level-num">1</span> (<span id="header-xp-val">0</span> XP)
+          </div>
+          <button class="btn-primary" id="header-start-study-btn" style="padding: 6px 14px; font-size: 12px; min-height: 38px;">+ Study Session</button>
+        </div>
+      </header>
+
+      <!-- Page Views Container -->
+      <main class="page-container" id="page-content">
+        <!-- Rendered dynamically by app.js -->
+      </main>
+
+    </div>
+
+    <!-- Mobile Bottom Navigation (Instagram Style) -->
+    <nav class="bottom-nav">
+      <ul class="bottom-nav-list">
+        <li><a href="#" class="bottom-nav-item active" data-page="dashboard"><span>📊</span> Dashboard</a></li>
+        <li><a href="#" class="bottom-nav-item" data-page="study"><span>📚</span> Study</a></li>
+        <li><a href="#" class="bottom-nav-item" data-page="tasks"><span>✅</span> Tasks</a></li>
+        <li><a href="#" class="bottom-nav-item" data-page="growth"><span>🌱</span> Growth</a></li>
+        <li><a href="#" class="bottom-nav-item" data-page="analytics"><span>📈</span> Analytics</a></li>
+        <li><a href="#" class="bottom-nav-item" data-page="profile"><span>⚙️</span> Profile</a></li>
+      </ul>
+    </nav>
+
+    <!-- Mobile Floating Action Button -->
+    <button class="mobile-fab" id="mobile-fab-study" title="Start Study Session">+</button>
+
+    <!-- Modals & Overlays Container -->
+    <div id="modal-container">
+      
+      <!-- Focus Mode Overlay -->
+      <div id="focus-mode-overlay" class="focus-overlay" style="display: none;">
+        <h2 style="font-size: 28px; font-weight: 800; text-align: center;">Focus Mode</h2>
+        <p style="opacity: 0.8; font-size: 14px; text-align: center;">Distraction-free environment</p>
+        
+        <div class="focus-timer-ring">
+          <div id="focus-digits" style="font-size: 54px; font-weight: 800;">25:00</div>
+        </div>
+
+        <div style="display: flex; gap: 14px; margin-top: 20px;">
+          <button class="btn-primary" id="focus-pause-btn" style="background: white; color: var(--primary-forest);">Pause</button>
+          <button class="btn-danger" id="focus-stop-btn">Stop & Save</button>
+          <button class="btn-secondary" id="exit-focus-btn" style="color: white; border-color: white;">Exit Focus</button>
+        </div>
+      </div>
+
+      <!-- Create Subject Modal Sheet -->
+      <div id="subject-modal" class="lock-overlay" style="display: none;">
+        <div class="card" style="max-width: 480px; width: 100%;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="font-size: 20px; font-weight: 800; color: var(--primary-grass);">Add New Subject</h3>
+            <button id="close-subj-modal-btn" style="font-size: 20px; font-weight: 700; color: var(--text-muted);">✕</button>
+          </div>
+          
+          <form id="subject-modal-form" style="display: flex; flex-direction: column; gap: 16px;">
+            <label style="font-size: 13px; font-weight: 600;">Subject Title:
+              <input type="text" id="modal-subj-title" class="form-input" required placeholder="e.g. Organic Chemistry">
+            </label>
+
+            <label style="font-size: 13px; font-weight: 600;">Color Theme:
+              <div class="color-swatch-picker" id="modal-subj-colors">
+                <span class="color-option selected" data-color="#2d6a4f" style="background: #2d6a4f;"></span>
+                <span class="color-option" data-color="#1d3557" style="background: #1d3557;"></span>
+                <span class="color-option" data-color="#6a0572" style="background: #6a0572;"></span>
+                <span class="color-option" data-color="#b5838d" style="background: #b5838d;"></span>
+                <span class="color-option" data-color="#e76f51" style="background: #e76f51;"></span>
+                <span class="color-option" data-color="#2a9d8f" style="background: #2a9d8f;"></span>
+              </div>
+            </label>
+
+            <button type="submit" class="btn-primary" style="justify-content: center; margin-top: 10px;">Create Subject</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Create Task Modal Sheet -->
+      <div id="task-modal" class="lock-overlay" style="display: none;">
+        <div class="card" style="max-width: 480px; width: 100%;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="font-size: 20px; font-weight: 800; color: var(--primary-grass);">Add New Task</h3>
+            <button id="close-task-modal-btn" style="font-size: 20px; font-weight: 700; color: var(--text-muted);">✕</button>
+          </div>
+          
+          <form id="task-modal-form" style="display: flex; flex-direction: column; gap: 16px;">
+            <label style="font-size: 13px; font-weight: 600;">Task Title:
+              <input type="text" id="modal-task-title" class="form-input" required placeholder="e.g. Complete chapter 4 exercises">
+            </label>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <label style="font-size: 13px; font-weight: 600;">Category:
+                <select id="modal-task-category" class="form-input">
+                  <option value="Study">Study 📚</option>
+                  <option value="Physical">Physical 🏋️</option>
+                  <option value="Mental">Mental 🧘</option>
+                  <option value="Personal">Personal 👤</option>
+                </select>
+              </label>
+
+              <label style="font-size: 13px; font-weight: 600;">Priority:
+                <select id="modal-task-priority" class="form-input">
+                  <option value="low">Low 🟢</option>
+                  <option value="medium" selected>Medium 🟡</option>
+                  <option value="high">High 🔴</option>
+                </select>
+              </label>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <label style="font-size: 13px; font-weight: 600;">Due Date:
+                <input type="date" id="modal-task-date" class="form-input">
+              </label>
+
+              <label style="font-size: 13px; font-weight: 600;">Recurrence:
+                <select id="modal-task-recurring" class="form-input">
+                  <option value="none">None</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                </select>
+              </label>
+            </div>
+
+            <button type="submit" class="btn-primary" style="justify-content: center; margin-top: 10px;">Create Task</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Global Search Modal Sheet -->
+      <div id="search-modal" class="lock-overlay" style="display: none;">
+        <div class="card" style="max-width: 600px; width: 100%;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--primary-grass);">Global Search</h3>
+            <button id="close-search-btn" style="font-size: 18px; font-weight: 700; color: var(--text-muted);">✕</button>
+          </div>
+          
+          <input type="text" id="global-search-input" class="form-input" placeholder="Search tasks, subjects, achievements..." style="margin-bottom: 15px;">
+          
+          <div id="search-results-container" style="max-height: 350px; overflow-y: auto;">
+            <div style="text-align: center; color: var(--text-muted); padding: 20px;">Type a query to search StudyOS...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-Tab Version Lock Overlay -->
+      <div id="multi-tab-lock" class="lock-overlay" style="display: none;">
+        <div class="card" style="max-width: 450px; text-align: center;">
+          <div style="font-size: 48px; margin-bottom: 10px;">🔒</div>
+          <h3 style="font-size: 20px; font-weight: 800; color: var(--accent-red);">Database Version Updated</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 15px 0;">
+            StudyOS was updated in another browser tab. Database writes have been locked in this tab to prevent data corruption.
+          </p>
+          <button class="btn-primary" onclick="window.location.reload()">Reload Page</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" style="position: fixed; bottom: calc(var(--bottom-nav-height) + 16px); right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 8px;"></div>
+
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
